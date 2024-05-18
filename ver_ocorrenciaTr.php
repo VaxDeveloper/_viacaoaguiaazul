@@ -138,7 +138,7 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 2 && $_SESSION['status'
                             
                             // Adicionar um formulário para enviar as informações do motorista, ação e observações
                             echo "<div class='container p-3'>";
-                            echo "<form action='envia.php' method='post'>";
+                            echo "<form action='atualizaTr.php' method='post'>";
                             
                             // Continuação do formulário...
 
