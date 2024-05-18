@@ -1,0 +1,5 @@
+/* GLOBAIS */
+nav a img {
+    width: 300px;
+    filter: invert(75%);
+}

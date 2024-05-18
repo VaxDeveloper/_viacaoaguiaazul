@@ -1,0 +1,130 @@
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    /* PAINEL */
+    #ctrl-panel{
+        height: 520px;
+    }
+
+    #logo{
+        width: 220px;
+        filter: invert(75%);
+    }
+
+    /* DESHBOARD */
+    .container-dados{
+        width: 100%;
+        font-size: .8em;
+    }
+    .mobile-report, 
+    .container-menu,
+    .Front-desk{
+        display: none;
+    }
+
+    /* 1ª PÁGINA ---> REDIRECINAMENTO */
+    #redirecionamento{
+        height: 100%;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* VER OCORRÊNCIAS */
+    .select-group{
+        width: 100%;
+    }
+
+    .detalhes{
+        text-align: center;
+        font-size: 1.9em;
+    }
+    
+    p{
+        font-size: 1.2em;
+    }
+
+    #btn-logout{
+        font-size: 1.1em;
+    }
+
+    .detalhes-info-1{
+        width: 39%;
+    }
+
+    .detalhes-info-2{
+        width: 61%;
+    }
+
+    .form-select{
+        font-size: 1.1em;
+    }
+
+    .form-control{
+        font-size: 1.1em;
+    }
+
+    /* Footer */
+    footer{
+        margin-top: 4%;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    /* DESHBOARD */
+    #ctrl-panel{
+        height: 520px;
+    }
+
+    #logo{
+        width: 220px;
+        filter: invert(75%);
+    }
+
+    .container-dados{
+        width: 100%;
+        font-size: .8em;
+    }
+        
+    .mobile-report, 
+    .container-menu,
+    .Front-desk{
+        display: none;
+    }
+
+    /* 1ª PÁGINA ---> REDIRECINAMENTO */
+    #redirecionamento{
+        height: 100%;
+    }
+
+    /* VER OCORRÊNCIAS */
+    .select-group{
+        width: 100%;
+    }
+
+    /* FOOTER */
+    footer{
+        margin-top: 5%;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .nav-mobile{
+        display: none;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .nav-mobile{
+        display: none;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .nav-mobile{
+        display: none;
+    }
+}
