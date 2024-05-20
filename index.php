@@ -126,7 +126,6 @@ if (!isset($_SESSION['user'])) {
                                 <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Login</button></div>
                             </form>
                             <div>
-                                <a class="mx-3 fs-6" href="https://touching-dear-adder.ngrok-free.app">Voltar</a>
                                 <a class="mx-3 fs-6"href="solicitacoes.php">Solicitações</a>
                             </div>
                         </div>
