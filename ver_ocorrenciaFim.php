@@ -108,7 +108,7 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 2 && $_SESSION['status'
                             $detalhes_ocorrencia = mysqli_fetch_assoc($resultado_consulta);
                             // Aqui você pode exibir os detalhes da ocorrência dentro de uma caixa de texto
                             echo "<div class='container detalhes-ocorrencia'>";
-                            echo "<h1 class='mt-4 detalhes'>Detalhes da Ocorrência:</h1>";
+                            echo "<h1 class='mt-4 detalhes'>Dados gerados pelo setor de´VÍDEO</h1>";
                             echo "<div class='row my-4' style='color: #adb5bd;'>";
                             echo "<div class='col-4 detalhes-info-1' style='border-right: solid 1px #6c757d;'>";
                             echo "<p><strong>ID Ocorrência:</strong> " . $detalhes_ocorrencia['id'] . "</p>";
@@ -117,6 +117,8 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 2 && $_SESSION['status'
 
                             // Constrói o caminho do arquivo de vídeo
                             $caminho_arquivo = "videos/{$detalhes_ocorrencia['video']}";
+
+                            echo "<hr>"
 
                             echo "<div class='d-flex'>";
                             echo "<p><strong>Vídeo:</strong></p>";
