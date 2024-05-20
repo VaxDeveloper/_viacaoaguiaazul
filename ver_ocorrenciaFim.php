@@ -144,7 +144,7 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 2 && $_SESSION['status'
                         mysqli_close($conexao);
                     } else {
                         // Se o ID da ocorrência não foi passado na URL, redireciona para a página anterior
-                        header("Location: pagina_anterior.php"); // Substitua "pagina_anterior.php" pelo nome da página anterior
+                        header("Location: deshboard-trafego.php"); // Substitua "pagina_anterior.php" pelo nome da página anterior
                         exit();
                     }
                     ?>
