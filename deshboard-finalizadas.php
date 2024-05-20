@@ -42,8 +42,8 @@ if (!isset($_SESSION['user']) || !in_array($_SESSION['status'], [2, 10, 11])) {
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><img id="logo" data-aos="zoom-in-up" data-aos-duration="600" data-aos-delay="300" src="assets/img/Logo_aguia-azul.png"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
                 <div class="d-md-none my-3">
-                    <a id="btn-logout" class="btn btn-sm btn-info d-xl-flex align-items-xl-center" role="button" href="../logout.php">SAIR</a>
-                    <a id="btn-logout" class="btn btn-sm btn-secondary d-xl-flex align-items-xl-center" role="button" href="../painel.php">Painel</a>
+                    <a id="btn-logout" class="btn btn-sm btn-info d-xl-flex align-items-xl-center" role="button" href="logout.php">SAIR</a>
+                    <a id="btn-logout" class="btn btn-sm btn-secondary d-xl-flex align-items-xl-center" role="button" href="painel.php">Painel</a>
                     <a class="btn btn-sm btn-primary" role="button" href="solicitacoes.php" style="font-family: Poppins, sans-serif;">Relatar problemas</a>
                 </div>
             </div>
