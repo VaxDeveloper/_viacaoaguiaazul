@@ -159,6 +159,7 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 1 && $_SESSION['status'
                                 <th class='text-center align-middle'>Ocorrência</th>
                                 <th class='text-center align-middle mobile-report'>Descrição</th>
                                 <th class='text-center align-middle mobile-report'>Enviar Trafego</th>
+                                <th class='text-center align-middle mobile-report'>Enviar Manutenção</th>
                                 <th class='text-center align-middle'>Vídeo</th>";
                             echo "</tr>
                         </thead>
@@ -179,6 +180,12 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 1 && $_SESSION['status'
                                             <form action='mover-ocorrencia_trafego.php' method='post'>
                                                 <input type='hidden' name='ocorrencia_id' value='{$linha['id']}'>
                                                 <button type='submit' class='btn btn-outline-info btn-sm'>Tráfego</button>
+                                            </form>
+                                        </td>
+                                        <td class='text-center align-middle update-action-column mobile-report'>
+                                            <form action='mover-ocorrencia_manutencao.php' method='post'>
+                                                <input type='hidden' name='ocorrencia_id' value='{$linha['id']}'>
+                                                <button type='submit' class='btn btn-outline-danger btn-sm'>Manut</button>
                                             </form>
                                         </td>
                                         <td class='text-center align-middle'><a href='download_video.php?video={$linha['id']}'>Download</a></td>

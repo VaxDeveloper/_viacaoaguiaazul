@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\temp\\projetos\\Waldir\\_viacaoaguiaazul\\",
+  "WorkspaceRootPath": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\temp\\projetos\\Waldir\\_viacaoaguiaazul\\deshboard-video.php||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:deshboard-video.php||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\deshboard-finalizadas.php||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:deshboard-finalizadas.php||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +14,27 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "deshboard-video.php",
-              "DocumentMoniker": "D:\\temp\\projetos\\Waldir\\_viacaoaguiaazul\\deshboard-video.php",
-              "RelativeDocumentMoniker": "deshboard-video.php",
-              "ToolTip": "D:\\temp\\projetos\\Waldir\\_viacaoaguiaazul\\deshboard-video.php",
-              "RelativeToolTip": "deshboard-video.php",
-              "ViewState": "AQIAAHUAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "deshboard-finalizadas.php",
+              "DocumentMoniker": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\deshboard-finalizadas.php",
+              "RelativeDocumentMoniker": "deshboard-finalizadas.php",
+              "ToolTip": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\deshboard-finalizadas.php",
+              "RelativeToolTip": "deshboard-finalizadas.php",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAAAGIAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002338|",
-              "WhenOpened": "2024-05-18T14:45:13.121Z",
+              "WhenOpened": "2024-05-20T18:02:44.562Z",
               "EditorCaption": ""
             }
           ]
