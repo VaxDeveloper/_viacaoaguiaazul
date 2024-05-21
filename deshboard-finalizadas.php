@@ -164,7 +164,7 @@ if (!isset($_SESSION['user']) || !in_array($_SESSION['status'], [2, 10, 11])) {
                                     <td class='text-center align-middle mobile-report'>{$linha['linha']}</td>
                                     <td class='text-start align-middle'>{$linha['ocorrencia']}</td>
                                     <td class='text-center align-middle mobile-report'>{$linha['acao']}</td>
-                                    <td class='text-start align-middle'>{$linha['observacao']}</td>
+                                    <td class='text-start align-middle'>{$linha['observacoes']}</td>
                                     <td class='text-center align-middle'><a href='download_video.php?video={$linha['id']}'>Ver</a></td>
                                 </tr>";
                 }
