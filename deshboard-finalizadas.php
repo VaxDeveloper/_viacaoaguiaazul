@@ -147,7 +147,7 @@ if (!isset($_SESSION['user']) || !in_array($_SESSION['status'], [2, 10, 11])) {
                             <th class='text-center align-middle mobile-report'>Linha</th>
                             <th class='text-start align-middle'>Ocorrência</th>
                             <th class='text-center align-middle'>Ação Tráfego</th>
-                            <th class='text-center align-middle'>OB: Tráfego</th>
+                            <th class='text-start align-middle'>OB: Tráfego</th>
                         </tr>
                         </thead>
                         <tbody class='table-group-divider'>";
