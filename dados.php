@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta SQL para obter os dados do banco de dados
-$sql = "SELECT motorista, ocorrencia, acao  FROM u219851065_AguiaAzul.ocorrencia_video";
+$sql = "SELECT motorista, ocorrencia, acao  FROM u219851065_AguiaAzul.ocorrencia_finalizada";
 
 $result = $conn->query($sql);
 
