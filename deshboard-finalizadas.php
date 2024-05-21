@@ -159,7 +159,7 @@ if (!isset($_SESSION['user']) || !in_array($_SESSION['status'], [2, 10, 11])) {
                         <td class='text-center align-middle'>{$linha['carro']}</td>
                         <td class='text-center align-middle mobile-report'>{$linha['linha']}</td>
                         <td class='text-start align-middle'>{$linha['ocorrencia']}</td>
-                        <td class='text-cente align-middle'>{$linha['acao']}</td>
+                        <td class='text-center align-middle'>{$linha['acao']}</td>
                     </tr>";
                 }
                 echo "</tbody>
