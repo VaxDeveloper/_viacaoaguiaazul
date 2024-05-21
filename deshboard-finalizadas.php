@@ -148,21 +148,25 @@ if (!isset($_SESSION['user']) || !in_array($_SESSION['status'], [2, 10, 11])) {
                             <th class='text-start align-middle'>Ocorrência</th>
                             <th class='text-center align-middle'>Ação Tráfego</th>
                             <th class='text-center align-middle'>OBS. Tráfego</th>
+                            <th class='text-center align-middle'>Vídeo</th>";
                         </tr>
                         </thead>
                         <tbody class='table-group-divider'>";
                 while ($linha = mysqli_fetch_assoc($resultado_consulta)) {
-                    echo "<tr>
-                        <td class='text-center text-danger align-middle'>{$linha['id']}</td>
-                        <td class='text-center align-middle'>{$linha['data']}</td>
-                        <td class='text-center align-middle'>{$linha['horario']}</td>
-                        <td class='text-center align-middle'>{$linha['motorista']}</td>
-                        <td class='text-center align-middle'>{$linha['carro']}</td>
-                        <td class='text-center align-middle mobile-report'>{$linha['linha']}</td>
-                        <td class='text-start align-middle'>{$linha['ocorrencia']}</td>
-                        <td class='text-center align-middle mobile-report'>{$linha['acao']}</td>
-                        <td class='text-start align-middle'>{$linha['observacao']}</td>
-                    </tr>";
+                    $caminho_arquivo = "../bkp/_viacaoaguiaazul/videos/{$linha['video']}";
+
+                                echo "<tr>
+                                    <td class='text-center text-danger align-middle'>{$linha['id']}</td>
+                                    <td class='text-center align-middle'>{$linha['data']}</td>
+                                    <td class='text-center align-middle'>{$linha['horario']}</td>
+                                    <td class='text-center align-middle'>{$linha['motorista']}</td>
+                                    <td class='text-center align-middle'>{$linha['carro']}</td>
+                                    <td class='text-center align-middle mobile-report'>{$linha['linha']}</td>
+                                    <td class='text-start align-middle'>{$linha['ocorrencia']}</td>
+                                    <td class='text-center align-middle mobile-report'>{$linha['acao']}</td>
+                                    <td class='text-start align-middle'>{$linha['observacao']}</td>
+                                    <td class='text-center align-middle'><a href='download_video.php?video={$linha['id']}'>Ver</a></td>
+                                </tr>";
                 }
                 echo "</tbody>
                     </table>";
