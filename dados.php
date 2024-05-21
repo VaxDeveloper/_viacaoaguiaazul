@@ -8,11 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta SQL para obter os dados do banco de dados
-$sql = "SELECT motorista, COUNT(*) AS total_ocorrencias
-        FROM u219851065_AguiaAzul.ocorrencia_finalizada
-        GROUP BY motorista
-        ORDER BY total_ocorrencias DESC
-        LIMIT 10";
+$sql = "SELECT motorista, ocorrencia, acao  FROM u219851065_AguiaAzul.ocorrencia_finalizada";
 
 $result = $conn->query($sql);
 
