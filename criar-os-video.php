@@ -86,7 +86,7 @@ if (!isset($_SESSION['user'])) {
                                         </div>
                                         <div class="d-flex mb-3"><select class="form-select" name="motorista">
                                                 <optgroup label="Informe o Motorista:">
-                                                    <option value="">Informe o Motorista:</option>
+                                                    <option label="Informe o Motorista:"></option>
                                                     <option value="307319" disabled>307319 - Adeilson dos Santos Barbosa</option>
                                                     <option value="307507" disabled>307507 - Adenilson Jesus da Silva</option>
                                                     <option value="307292" disabled>307292 - Adriano Pinto de Almeida</option>
