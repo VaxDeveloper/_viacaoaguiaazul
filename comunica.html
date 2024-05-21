@@ -38,7 +38,7 @@
     </nav>
 
     <div class="container">
-
+        <!-- Gráficos -->
         <div class="row">
             <div class="col-md-6" style="width: 580px;">
                 <canvas id="myChart1" width="400" height="400"></canvas>
@@ -47,10 +47,28 @@
                 <canvas id="myChart2" width="400" height="400"></canvas>
             </div>
         </div>
+
+        <!-- Lista de motoristas com mais ocorrências -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Top 10 Motoristas com Mais Ocorrências</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Motorista</th>
+                            <th>Total de Ocorrências</th>
+                        </tr>
+                    </thead>
+                    <tbody id="motoristas-list">
+                        <!-- Conteúdo preenchido pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Recuperar os dados do PHP usando AJAX apenas uma vez
+        // Recuperar os dados do PHP usando AJAX
         var xmlhttp = new XMLHttpRequest();
         var url = "dados.php";
 
@@ -59,13 +77,16 @@
                 // Converter os dados JSON recebidos para objeto JavaScript
                 var data = JSON.parse(this.responseText);
 
+                // Dados para os gráficos
+                var dataGraficos = data.graficos;
+
                 // Processar os dados e criar os gráficos
                 var labels = [];
                 var values = [];
                 var actionCounts = {}; // Objeto para contar as ações por ocorrência
                 var backgroundColors = []; // Array para cores
 
-                data.forEach(function (item) {
+                dataGraficos.forEach(function (item) {
                     labels.push(item.ocorrencia); // Ajuste para a coluna correta
 
                     // Contar as ações por ocorrência
@@ -170,6 +191,22 @@
                             }
                         }
                     }
+                });
+
+                // Dados para a tabela dos motoristas
+                var dataMotoristas = data.motoristas;
+
+                // Preencher a tabela dos motoristas
+                var motoristasList = document.getElementById('motoristas-list');
+                dataMotoristas.forEach(function (motorista) {
+                    var row = document.createElement('tr');
+                    var motoristaCell = document.createElement('td');
+                    motoristaCell.textContent = motorista.motorista;
+                    var ocorrenciasCell = document.createElement('td');
+                    ocorrenciasCell.textContent = motorista.total_ocorrencias;
+                    row.appendChild(motoristaCell);
+                    row.appendChild(ocorrenciasCell);
+                    motoristasList.appendChild(row);
                 });
             }
         };
