@@ -7,31 +7,54 @@ if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
 }
 
-// Consulta SQL para obter os dados do banco de dados
-$sql = "SELECT motorista, ocorrencia, acao  FROM u219851065_AguiaAzul.ocorrencia_finalizada";
-
-$result = $conn->query($sql);
+// Consulta SQL para os dados dos gráficos
+$sql_graficos = "SELECT motorista, ocorrencia, acao FROM u219851065_AguiaAzul.ocorrencia_finalizada";
+$result_graficos = $conn->query($sql_graficos);
 
 // Verificar se a consulta teve sucesso
-if (!$result) {
+if (!$result_graficos) {
     die("Erro na consulta: " . $conn->error);
 }
 
-// Array para armazenar os dados
-$data = array();
+// Array para armazenar os dados dos gráficos
+$data_graficos = array();
 
 // Loop através dos resultados do banco de dados e adicionar ao array
-while ($row = $result->fetch_assoc()) {
-    $data[] = $row;
+while ($row = $result_graficos->fetch_assoc()) {
+    $data_graficos[] = $row;
+}
+
+// Consulta SQL para os 10 motoristas com mais ocorrências
+$sql_motoristas = "SELECT motorista, COUNT(*) as total_ocorrencias 
+                   FROM u219851065_AguiaAzul.ocorrencia_finalizada 
+                   GROUP BY motorista 
+                   ORDER BY total_ocorrencias DESC 
+                   LIMIT 10";
+$result_motoristas = $conn->query($sql_motoristas);
+
+// Verificar se a consulta teve sucesso
+if (!$result_motoristas) {
+    die("Erro na consulta: " . $conn->error);
+}
+
+// Array para armazenar os dados dos motoristas
+$data_motoristas = array();
+
+// Loop através dos resultados do banco de dados e adicionar ao array
+while ($row = $result_motoristas->fetch_assoc()) {
+    $data_motoristas[] = $row;
 }
 
 // Verificar se há dados
-if (empty($data)) {
+if (empty($data_graficos) || empty($data_motoristas)) {
     die("Não foram encontrados dados.");
 }
 
-// Adicionar um registro de log para verificar os dados retornados
-error_log("Dados do banco de dados: " . json_encode($data));
+// Array para armazenar todos os dados
+$data = array(
+    'graficos' => $data_graficos,
+    'motoristas' => $data_motoristas
+);
 
 // Converter para formato JSON
 $json_data = json_encode($data);
