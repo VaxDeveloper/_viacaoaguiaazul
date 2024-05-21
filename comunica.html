@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Gráfico com Chart.js e MySQL</title>
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&amp;display=swap">
@@ -13,6 +12,11 @@
     <link rel="stylesheet" href="../assets/css/FPE-Gentella-form-elements-custom.css">
     <link rel="stylesheet" href="../assets/css/FPE-Gentella-form-elements.css">
     <link rel="stylesheet" href="../assets/css/tela-login/Login-with-overlay-image.css">
+
+    <title>Gráfico com Chart.js e MySQL</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
     <style>
         /* Oculta o botão de voltar ao dashboard ao imprimir */
         @media print {
@@ -21,16 +25,20 @@
             }
         }
     </style>
+
 </head>
 
 <body>
+
     <nav>
         <div class="container" style="margin-bottom:50px; margin-top: 20px">
             <img src="../assets/img/Logo_aguia-azul.png" alt="logo" style="width:300px; filter: invert(80%);">
             <h3 style="margin-top: 20px">Relatório de Ocorrências - Setor de Vídeo</h3>
         </div>
     </nav>
+
     <div class="container">
+
         <div class="row">
             <div class="col-md-6" style="width: 580px;">
                 <canvas id="myChart1" width="400" height="400"></canvas>
@@ -40,78 +48,154 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Top 10 Motoristas com Mais Ocorrências</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Motorista</th>
-                            <th>Ocorrências</th>
-                        </tr>
-                    </thead>
-                    <tbody id="topMotoristas">
-                        <!-- Os dados serão preenchidos aqui via JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
+    <script>
+        // Recuperar os dados do PHP usando AJAX apenas uma vez
+        var xmlhttp = new XMLHttpRequest();
+        var url = "dados.php";
+
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // Converter os dados JSON recebidos para objeto JavaScript
+                var data = JSON.parse(this.responseText);
+
+                // Processar os dados e criar os gráficos
+                var labels = [];
+                var values = [];
+                var actionCounts = {}; // Objeto para contar as ações por ocorrência
+                var backgroundColors = []; // Array para cores
+
+                data.forEach(function (item) {
+                    labels.push(item.ocorrencia); // Ajuste para a coluna correta
+
+                    // Contar as ações por ocorrência
+                    if (!actionCounts[item.ocorrencia]) {
+                        actionCounts[item.ocorrencia] = {};
+                    }
+                    actionCounts[item.ocorrencia][item.acao] = (actionCounts[item.ocorrencia][item.acao] || 0) + 1;
+
+                    // Gerar cor aleatória
+                    var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.2)';
+                    backgroundColors.push(randomColor);
+                });
+
+                // Contar o número total de ações por ocorrência
+                var actionTotals = {};
+                Object.keys(actionCounts).forEach(function (ocorrencia) {
+                    actionTotals[ocorrencia] = Object.values(actionCounts[ocorrencia]).reduce((a, b) => a + b, 0);
+                });
+
+                // Renderizar o gráfico 1
+                var ctx1 = document.getElementById('myChart1').getContext('2d');
+                var myChart1 = new Chart(ctx1, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(actionTotals),
+                        datasets: [{
+                            label: 'Quantidade por ocorrência',
+                            data: Object.values(actionTotals),
+                            backgroundColor: backgroundColors,
+                            borderColor: 'rgba(255, 99, 132, 2)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: true, // Exibir a legenda
+                                position: 'top' // Posição da legenda
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        var label = context.label || '';
+                                        var value = context.parsed || 0;
+                                        return label + ': ' + value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Preparar dados para a linha de ações no gráfico 2
+                var actionLabels = Object.keys(actionCounts);
+                var actionData = actionLabels.map(function (ocorrencia) {
+                    return Object.values(actionCounts[ocorrencia]);
+                });
+
+                // Renderizar o gráfico 2
+                var ctx2 = document.getElementById('myChart2').getContext('2d');
+                var myChart2 = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(actionTotals),
+                        datasets: [{
+                            label: 'Quantidade por ocorrência',
+                            data: Object.values(actionTotals),
+                            backgroundColor: backgroundColors,
+                            borderColor: 'rgba(255, 99, 132, 2)',
+                            borderWidth: 1
+                        }, {
+                            label: 'Quantidade de ações por ocorrência',
+                            data: actionData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            type: 'line'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: true, // Exibir a legenda
+                                position: 'top' // Posição da legenda
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: true // Empilhar barras no eixo X
+                            },
+                            y: {
+                                stacked: true // Empilhar barras no eixo Y
+                            }
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function (context) {
+                                    var label = context.dataset.label || '';
+                                    var value = context.parsed || 0;
+                                    return label + ': ' + value;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        };
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    </script>
+
     <div class="container mt-4">
         <div style="display: flex;">
             <!-- Botão de volta para Painel -->
             <div style="margin-top: 20px;" class="print-hide">
                 <a href="../painel.php" class="btn btn-primary">Voltar para Painel</a>
             </div>
+
             <!-- Botão de Gerar Impressão -->
             <div style="margin-top: 20px;" class="print-hide">
                 <button onclick="imprimirPagina()" class="btn btn-secondary">Imprimir</button>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
     <script>
         function imprimirPagina() {
             window.print();
         }
-
-        // Função para carregar os 10 primeiros motoristas com mais ocorrências
-        function carregarTopMotoristas() {
-            var xmlhttp = new XMLHttpRequest();
-            var url = "dados.php";
-
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    var data = JSON.parse(this.responseText);
-                    var tableBody = document.getElementById("topMotoristas");
-
-                    // Limpar o corpo da tabela
-                    tableBody.innerHTML = "";
-
-                    // Preencher a tabela com os dados dos motoristas
-                    data.forEach(function (item, index) {
-                        var row = "<tr>";
-                        row += "<td>" + (index + 1) + "</td>";
-                        row += "<td>" + item.motorista + "</td>";
-                        row += "<td>" + item.total_ocorrencias + "</td>";
-                        row += "</tr>";
-
-                        tableBody.innerHTML += row;
-                    });
-                }
-            };
-
-            xmlhttp.open("GET", url, true);
-            xmlhttp.send();
-        }
-
-        // Chamar a função para carregar os motoristas quando a página carregar
-        window.onload = function () {
-            carregarTopMotoristas();
-        };
     </script>
 </body>
 
