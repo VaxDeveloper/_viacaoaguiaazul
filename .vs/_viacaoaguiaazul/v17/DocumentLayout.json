@@ -1,17 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\",
-  "Documents": [
-    {
-<<<<<<< HEAD
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\deshboard-finalizadas.php||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:deshboard-finalizadas.php||{3B902123-F8A7-4915-9F01-361F908088D0}"
-=======
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\ver_ocorrenciaFim.php||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ver_ocorrenciaFim.php||{3B902123-F8A7-4915-9F01-361F908088D0}"
->>>>>>> 73b83443fa623d991fade3fe4ee08af95f549a64
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -19,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -28,30 +18,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-<<<<<<< HEAD
-              "Title": "deshboard-finalizadas.php",
-              "DocumentMoniker": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\deshboard-finalizadas.php",
-              "RelativeDocumentMoniker": "deshboard-finalizadas.php",
-              "ToolTip": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\deshboard-finalizadas.php",
-              "RelativeToolTip": "deshboard-finalizadas.php",
-              "ViewState": "AQIAAIcAAAAAAAAAAAAAAJQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002338|",
-              "WhenOpened": "2024-05-20T19:26:53.945Z",
-=======
-              "Title": "ver_ocorrenciaFim.php",
-              "DocumentMoniker": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\ver_ocorrenciaFim.php",
-              "RelativeDocumentMoniker": "ver_ocorrenciaFim.php",
-              "ToolTip": "C:\\Users\\Victor\\source\\repos\\VaxDeveloper\\_viacaoaguiaazul\\ver_ocorrenciaFim.php",
-              "RelativeToolTip": "ver_ocorrenciaFim.php",
-              "ViewState": "AQIAAHsAAAAAAAAAAAAAAJgAAAAKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002338|",
-              "WhenOpened": "2024-05-20T18:53:15.926Z",
->>>>>>> 73b83443fa623d991fade3fe4ee08af95f549a64
-              "EditorCaption": ""
             }
           ]
         }
