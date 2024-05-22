@@ -29,7 +29,7 @@
     <nav>
         <div class="container" style="margin-bottom:50px; margin-top: 20px">
             <img src="../assets/img/Logo_aguia-azul.png" alt="logo" style="width:300px; filter: invert(80%);">
-            <h3 style="margin-top: 20px">Transporte Urbano São Miguel de Ilhéus</h3>
+            <h3 style="margin-top: 20px">Viação Águia Azul</h3>
         </div>
     </nav>
 
