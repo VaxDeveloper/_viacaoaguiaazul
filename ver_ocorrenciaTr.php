@@ -116,12 +116,12 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 2 && $_SESSION['status'
                             echo "<p><strong>Horário:</strong> " . $detalhes_ocorrencia['horario'] . "</p>";
 
                             // Constrói o caminho do arquivo de vídeo
-                            $caminho_arquivo = "videos/{$detalhes_ocorrencia['video']}";
+                            $caminho_arquivo = "../bkp/_viacaoaguiaazul/videos/{$detalhes_ocorrencia['video']}";
 
                             echo "<div class='d-flex'>";
                             echo "<p><strong>Vídeo:</strong></p>";
                             // Adiciona um link para download do vídeo
-                            echo "<a class='mt-1 mx-2 link-warning' href='download_videoTr.php?video={$detalhes_ocorrencia['id']}'>Vídeo-1</a>";
+                            echo "<a class='mt-2 mx-2 link-warning' href='download_videoTr.php?video={$detalhes_ocorrencia['id']}'>Vídeo-1</a>";
                             echo "</div>";
                             echo "</div>";
                             echo "<div class='col-8 detalhes-info-2'>";
@@ -228,7 +228,7 @@ if (!isset($_SESSION['user']) || ($_SESSION['status'] != 2 && $_SESSION['status'
                             echo "<input type='hidden' name='id_ocorrencia' value='" . $id_ocorrencia . "'>";
                             
                             // Botão de envio do formulário
-                            echo "<input class='btn btn-outline-warning mt-3' type='submit' value='Enviar para o Banco de Dados'>";
+                            echo "<input class='btn btn-outline-danger mt-3' type='submit' value='>>> ATUALIZAR e FINALIZAR <<<'>";
                             echo "</form>";
                             echo "</div>";
                             
