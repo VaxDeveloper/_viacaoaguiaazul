@@ -1,4 +1,40 @@
-<?php
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Smiguel-ADM</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="assets/css/footer/Footer-Dark-icons.css">
+    <link rel="stylesheet" href="assets/css/FPE-Gentella-form-elements-custom.css">
+    <link rel="stylesheet" href="assets/css/FPE-Gentella-form-elements.css">
+    <link rel="stylesheet" href="assets/css/tela-login/Login-with-overlay-image.css">
+
+    <style>
+            /* Oculta o botão de voltar ao dashboard ao imprimir */
+            @media print {
+                .print-hide {
+                    display: none !important;
+                }
+            }
+    </style>
+
+</head>
+
+<body>
+    <nav>
+        <div class="container" style="margin-bottom:50px; margin-top: 20px">
+            <img src="assets/img/logo.png" alt="logo" style="width:145px; filter: invert(45%);">
+            <h3 style="margin-top: 20px">Transporte Urbano São Miguel de Ilhéus</h3>
+        </div>
+    </nav>
+
+    <div class="container">
+            <?php
 // Inicia a sessão
 session_start();
 
@@ -7,7 +43,7 @@ $conexao = mysqli_connect("localhost", "u219851065_admin_porto", "Xavier364074$"
 if (!$conexao) {
     echo "NÃO CONECTADO";
 } else {
-    echo "CONECTADO AO BANCO>>>>>>>>>";
+    echo "<div class='fs-6'>CONECTADO AO BANCO>>>>>>></div>";
 
     $data = mysqli_real_escape_string($conexao, $_POST['data']);
     $horario = mysqli_real_escape_string($conexao, $_POST['horario']);
@@ -37,7 +73,7 @@ if (!$conexao) {
                 $linhas_afetadas = mysqli_affected_rows($conexao);
 
                 if ($linhas_afetadas > 0) {
-                    echo "OCORRÊNCIA CADASTRADA COM SUCESSO!<br>";
+                    echo "<div class='fs-6'>OCORRÊNCIA CADASTRADA COM SUCESSO!!!</div><br>";
 
                     // Obtém o ID da última inserção
                     $ultimo_id = mysqli_insert_id($conexao);
@@ -50,26 +86,33 @@ if (!$conexao) {
                     $update_resultado = mysqli_query($conexao, $update_sql);
 
                     if ($update_resultado) {
-                        echo "Link para download do vídeo adicionado à tabela no banco de dados.<br>";
-                        echo "Vídeo salvo com sucesso!";
+                        echo "<div class='fs-6'>Link para download do vídeo adicionado à tabela no banco de dados.</div><br>";
+                        echo "<div class='fs-6'>Vídeo salvo com sucesso!</div>";
                     } else {
-                        echo "ERRO AO ATUALIZAR O LINK DE DOWNLOAD NA TABELA: " . mysqli_error($conexao);
+                        echo "<div class='fs-6'>ERRO AO ATUALIZAR O LINK DE DOWNLOAD NA TABELA: </div>" . mysqli_error($conexao);
                     }
-
-                    echo "<a href='criar-os-video.php'>VOLTAR</a>";
                 } else {
-                    echo "NENHUMA LINHA AFETADA. Verifique se os dados foram inseridos corretamente.<br>";
+                    echo "<div class='fs-6'>NENHUMA LINHA AFETADA. Verifique se os dados foram inseridos corretamente.</div><br>";
                 }
             } else {
-                echo "ERRO AO INSERIR DADOS: " . mysqli_error($conexao);
+                echo "<div class='fs-6'>ERRO AO INSERIR DADOS: </div>" . mysqli_error($conexao);
             }
         } else {
-            echo "ERRO AO MOVER O ARQUIVO DE VÍDEO PARA O DIRETÓRIO DESTINADO.";
+            echo "<div class='fs-6'>ERRO AO MOVER O ARQUIVO DE VÍDEO PARA O DIRETÓRIO DESTINADO.</div>";
         }
     } else {
-        echo "ERRO NO ENVIO DO VÍDEO: " . $_FILES['video']['error'];
+        echo "<div class='fs-6'>ERRO NO ENVIO DO VÍDEO: </div>" . $_FILES['video']['error'];
     }
 }
 
 mysqli_close($conexao);
 ?>
+
+        <div style="display: flex;">
+            <!-- Botão de volta para Deschboard -->
+            <div style="margin-top: 20px;" class="print-hide">
+                <a href="criar-os-video.php" class="btn btn-primary">Voltar Cadastro</a>
+            </div>
+        </div>
+    </div>
+</body>

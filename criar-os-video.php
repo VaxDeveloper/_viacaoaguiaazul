@@ -125,16 +125,16 @@ if (!isset($_SESSION['user'])) {
                                             </select></div>
                                         <div class="d-flex mb-3">
                                             </select><select class="form-select" name="linha" required>
-                                                <optgroup label="This is a group">
-                                                    <option value="12" selected="">Informe a linha:</option>
+                                                <optgroup label="Grupos de Linhas:">
+                                                    <option label="Informe a linha:"</option>
                                                     <option value="0001">0001 - Santiago x Balsa via centro</option>
                                                     <option value="0010">0010 - Balsa x Trancoso via centro</option>
                                                     <option value="0020">0020 - Balsa x Caraiva via centro</option>
                                                     <option value="0012">0012 - Vale verde x Arraial D'ajuda</option>
                                                 </optgroup>
                                             </select><select class="form-select input-form-os" name="carro" required>
-                                                <optgroup label="This is a group">
-                                                    <option value="">Escolha um carro:</option>
+                                                <optgroup label="Grupo de Carros:">
+                                                    <option label="Escolha um carro:"></option>
                                                     <option value="1070">1070 - JMI-1699</option>
                                                     <option value="1100">1100 - JMI-1739</option>
                                                     <option value="1110">1110 - JMI-1759</option>
@@ -163,7 +163,8 @@ if (!isset($_SESSION['user'])) {
                                             </select></div>
                                         <div class="d-flex mb-3"><select class="form-select" name="fiscal" required>
                                                 <optgroup label="This is a group">
-                                                    <option value="">Identifique-se:</option>
+                                                    <option label="">Identifique-se:</option>
+                                                    <option label="Identifique-se:"></option>
                                                     <option value="1252">1252</option>
                                                     <option value="1990">1990</option>
                                                     <option value="1991">1991</option>
