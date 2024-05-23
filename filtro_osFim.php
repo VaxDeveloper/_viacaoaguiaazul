@@ -28,7 +28,7 @@
 <body>
     <nav>
         <div class="container" style="margin-bottom:50px; margin-top: 20px">
-            <img src="../assets/img/Logo_aguia-azul.png" alt="logo" style="width:300px; filter: invert(80%);">
+            <img src="assets/img/Logo_aguia-azul.png" alt="logo" style="width:300px; filter: invert(80%);">
             <h3 style="margin-top: 20px">Relatório de Ocorrências FINALIZADAS</h3>
         </div>
     </nav>

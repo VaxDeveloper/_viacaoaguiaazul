@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Smiguel-ADM</title>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&amp;display=swap">
-    <link rel="stylesheet" href="../assets/css/bs-theme-overrides.css">
-    <link rel="stylesheet" href="../assets/css/footer/Footer-Dark-icons.css">
-    <link rel="stylesheet" href="../assets/css/FPE-Gentella-form-elements-custom.css">
-    <link rel="stylesheet" href="../assets/css/FPE-Gentella-form-elements.css">
-    <link rel="stylesheet" href="../assets/css/tela-login/Login-with-overlay-image.css">
+    <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="assets/css/footer/Footer-Dark-icons.css">
+    <link rel="stylesheet" href="assets/css/FPE-Gentella-form-elements-custom.css">
+    <link rel="stylesheet" href="assets/css/FPE-Gentella-form-elements.css">
+    <link rel="stylesheet" href="assets/css/tela-login/Login-with-overlay-image.css">
 
     <style>
             /* Oculta o botão de voltar ao dashboard ao imprimir */
@@ -28,7 +28,7 @@
 <body>
     <nav>
         <div class="container" style="margin-bottom:50px; margin-top: 20px">
-            <img src="../assets/img/Logo_aguia-azul.png" alt="logo" style="width:300px; filter: invert(80%);">
+            <img src="assets/img/Logo_aguia-azul.png" alt="logo" style="width:300px; filter: invert(80%);">
             <h3 style="margin-top: 20px">Relatório de Ocorrências - Setor de Tráfego</h3>
         </div>
     </nav>
@@ -73,10 +73,9 @@
                                 <th class='text-center'>Motorista</th>
                                 <th class='text-center'>Carro</th>
                                 <th class='text-center'>Linha</th>
-                                <th class='text-center'>Ocorrência</th>
-                                <th class='text-center'>Descrição</th>
-                                <th class='text-center'>Ação</th>
-                                <th>Link do Vídeo</th>";
+                                <th class='text-start'>Ocorrência</th>
+                                <th class='text-start'>Descrição</th>
+                                <th class='text-center'>Vídeo</th>";
                 if ($_SESSION['status'] == 5) {
                     echo "<th>Editar</th>";
                 }
@@ -96,8 +95,7 @@
                             <td class='text-center'>{$linha['linha']}</td>
                             <td class='text-start'>{$linha['ocorrencia']}</td>
                             <td class='text-start'>{$linha['descricao']}</td>
-                            <td class='text-start'>{$linha['acao']}</td>
-                            <td><a href='download_videoTr.php?video={$linha['id']}'>Download</a></td>";
+                            <td class='text-center'><a href='download_videoTr.php?video={$linha['id']}'>Download</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody>
