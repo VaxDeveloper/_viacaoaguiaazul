@@ -83,6 +83,25 @@
                 </table>
             </div>
         </div>
+
+        <!-- Lista de motoristas com evasão e não gira roleta -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Ocorrências de Evasão e "Motorista não gira a roleta"</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Motorista</th>
+                            <th>Total de Evasão</th>
+                            <th>Total de "Motorista não gira a roleta"</th>
+                        </tr>
+                    </thead>
+                    <tbody id="evasao-roleta-list">
+                        <!-- Conteúdo preenchido pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -92,49 +111,58 @@
 
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                // Converter os dados JSON recebidos para objeto JavaScript
                 var data = JSON.parse(this.responseText);
 
-                // Dados para os gráficos
-                var dataGraficos = data.graficos;
-
-                // Processar os dados e criar os gráficos
+                // Dados para o primeiro gráfico
                 var labels = [];
-                var values = [];
-                var actionCounts = {}; // Objeto para contar as ações por ocorrência
-                var backgroundColors = []; // Array para cores
+                var ocorrenciaCounts = {};
+                var actionCounts = {};
 
-                dataGraficos.forEach(function (item) {
-                    labels.push(item.ocorrencia); // Ajuste para a coluna correta
-
-                    // Contar as ações por ocorrência
-                    if (!actionCounts[item.ocorrencia]) {
-                        actionCounts[item.ocorrencia] = {};
+                data.graficos.forEach(function (item) {
+                    var label = item.ocorrencia;
+                    if (!labels.includes(label)) {
+                        labels.push(label);
                     }
-                    actionCounts[item.ocorrencia][item.acao] = (actionCounts[item.ocorrencia][item.acao] || 0) + 1;
+                    if (!ocorrenciaCounts[label]) {
+                        ocorrenciaCounts[label] = 0;
+                    }
+                    ocorrenciaCounts[label] += 1;
 
-                    // Gerar cor aleatória
-                    var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.2)';
-                    backgroundColors.push(randomColor);
+                    if (!actionCounts[label]) {
+                        actionCounts[label] = {};
+                    }
+                    if (!actionCounts[label][item.acao]) {
+                        actionCounts[label][item.acao] = 0;
+                    }
+                    actionCounts[label][item.acao] += 1;
                 });
 
-                // Contar o número total de ações por ocorrência
+                // Preparar dados para o gráfico 1
+                var dataCounts = labels.map(function (label) {
+                    return ocorrenciaCounts[label];
+                });
+
                 var actionTotals = {};
-                Object.keys(actionCounts).forEach(function (ocorrencia) {
-                    actionTotals[ocorrencia] = Object.values(actionCounts[ocorrencia]).reduce((a, b) => a + b, 0);
-                });
+                for (var action in actionCounts) {
+                    for (var label in actionCounts[action]) {
+                        if (!actionTotals[label]) {
+                            actionTotals[label] = 0;
+                        }
+                        actionTotals[label] += actionCounts[action][label];
+                    }
+                }
 
                 // Renderizar o gráfico 1
                 var ctx1 = document.getElementById('myChart1').getContext('2d');
                 var myChart1 = new Chart(ctx1, {
-                    type: 'pie',
+                    type: 'bar',
                     data: {
-                        labels: Object.keys(actionTotals),
+                        labels: labels,
                         datasets: [{
-                            label: 'Quantidade por ocorrência',
-                            data: Object.values(actionTotals),
-                            backgroundColor: backgroundColors,
-                            borderColor: 'rgba(255, 99, 132, 2)',
+                            label: 'Quantidade por Ocorrência',
+                            data: dataCounts,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 1
                         }]
                     },
@@ -241,6 +269,25 @@
                     row.appendChild(ocorrenciaCell);
                     row.appendChild(totalOcorrenciasCell);
                     ocorrenciasList.appendChild(row);
+                });
+
+                // Dados para a tabela de evasão e roleta
+                var dataEvasaoRoleta = data.evasao_roleta;
+
+                // Preencher a tabela de evasão e roleta
+                var evasaoRoletaList = document.getElementById('evasao-roleta-list');
+                dataEvasaoRoleta.forEach(function (motorista) {
+                    var row = document.createElement('tr');
+                    var motoristaCell = document.createElement('td');
+                    motoristaCell.textContent = motorista.motorista;
+                    var evasaoCell = document.createElement('td');
+                    evasaoCell.textContent = motorista.evasao;
+                    var naoGiraRoletaCell = document.createElement('td');
+                    naoGiraRoletaCell.textContent = motorista.nao_gira_roleta;
+                    row.appendChild(motoristaCell);
+                    row.appendChild(evasaoCell);
+                    row.appendChild(naoGiraRoletaCell);
+                    evasaoRoletaList.appendChild(row);
                 });
             }
         };

@@ -64,8 +64,29 @@ while ($row = $result_ocorrencias->fetch_assoc()) {
     $data_ocorrencias[] = $row;
 }
 
+// Consulta SQL para contar ocorrências de evasão e motorista não gira a roleta por motorista
+$sql_evasao_roleta = "SELECT motorista, 
+                      SUM(CASE WHEN ocorrencia = 'evasão' THEN 1 ELSE 0 END) as evasao,
+                      SUM(CASE WHEN ocorrencia = 'Motorista não gira a roleta' THEN 1 ELSE 0 END) as nao_gira_roleta
+                      FROM u219851065_AguiaAzul.ocorrencia_finalizada
+                      GROUP BY motorista";
+$result_evasao_roleta = $conn->query($sql_evasao_roleta);
+
+// Verificar se a consulta teve sucesso
+if (!$result_evasao_roleta) {
+    die("Erro na consulta: " . $conn->error);
+}
+
+// Array para armazenar os dados das ocorrências de evasão e roleta
+$data_evasao_roleta = array();
+
+// Loop através dos resultados do banco de dados e adicionar ao array
+while ($row = $result_evasao_roleta->fetch_assoc()) {
+    $data_evasao_roleta[] = $row;
+}
+
 // Verificar se há dados
-if (empty($data_graficos) || empty($data_motoristas) || empty($data_ocorrencias)) {
+if (empty($data_graficos) || empty($data_motoristas) || empty($data_ocorrencias) || empty($data_evasao_roleta)) {
     die("Não foram encontrados dados.");
 }
 
@@ -73,7 +94,8 @@ if (empty($data_graficos) || empty($data_motoristas) || empty($data_ocorrencias)
 $data = array(
     'graficos' => $data_graficos,
     'motoristas' => $data_motoristas,
-    'ocorrencias' => $data_ocorrencias
+    'ocorrencias' => $data_ocorrencias,
+    'evasao_roleta' => $data_evasao_roleta
 );
 
 // Converter para formato JSON
