@@ -87,13 +87,14 @@
         <!-- Lista de motoristas com evasão e não gira roleta -->
         <div class="row mt-4">
             <div class="col-md-12">
-                <h4>Ocorrências de Evasão e "Motorista não gira a roleta"</h4>
+                <h4>Ocorrências de Evasão</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Motorista</th>
                             <th>Total de Evasão</th>
                             <th>Total de "Motorista não gira a roleta"</th>
+                            <th>Total Geral</th>
                         </tr>
                     </thead>
                     <tbody id="evasao-roleta-list">
@@ -283,9 +284,12 @@
                     evasaoCell.textContent = motorista.evasao;
                     var naoGiraRoletaCell = document.createElement('td');
                     naoGiraRoletaCell.textContent = motorista.nao_gira_roleta;
+                    var totalGeralCell = document.createElement('td');
+                    totalGeralCell.textContent = motorista.evasao + motorista.nao_gira_roleta;
                     row.appendChild(motoristaCell);
                     row.appendChild(evasaoCell);
                     row.appendChild(naoGiraRoletaCell);
+                    row.appendChild(totalGeralCell);
                     evasaoRoletaList.appendChild(row);
                 });
             }
