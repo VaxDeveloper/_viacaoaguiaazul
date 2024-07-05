@@ -113,6 +113,12 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
 
+                // Verificar se há dados
+                if (!data.graficos || !data.motoristas || !data.ocorrencias || !data.evasao_roleta) {
+                    console.error("Erro: Dados ausentes no JSON recebido.");
+                    return;
+                }
+
                 // Dados para o primeiro gráfico
                 var labels = [];
                 var ocorrenciaCounts = {};
@@ -200,16 +206,9 @@
                         datasets: [{
                             label: 'Quantidade por ocorrência',
                             data: Object.values(actionTotals),
-                            backgroundColor: backgroundColors,
-                            borderColor: 'rgba(255, 99, 132, 2)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 1
-                        }, {
-                            label: 'Quantidade de ações por ocorrência',
-                            data: actionData,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1,
-                            type: 'line'
                         }]
                     },
                     options: {
