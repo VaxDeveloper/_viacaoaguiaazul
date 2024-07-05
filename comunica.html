@@ -65,6 +65,24 @@
                 </table>
             </div>
         </div>
+
+        <!-- Lista de ocorrências por tipo -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Quantidade de Ocorrências por Tipo</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Ocorrência</th>
+                            <th>Total de Ocorrências</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ocorrencias-list">
+                        <!-- Conteúdo preenchido pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -207,6 +225,22 @@
                     row.appendChild(motoristaCell);
                     row.appendChild(ocorrenciasCell);
                     motoristasList.appendChild(row);
+                });
+
+                // Dados para a tabela das ocorrências
+                var dataOcorrencias = data.ocorrencias;
+
+                // Preencher a tabela das ocorrências
+                var ocorrenciasList = document.getElementById('ocorrencias-list');
+                dataOcorrencias.forEach(function (ocorrencia) {
+                    var row = document.createElement('tr');
+                    var ocorrenciaCell = document.createElement('td');
+                    ocorrenciaCell.textContent = ocorrencia.ocorrencia;
+                    var totalOcorrenciasCell = document.createElement('td');
+                    totalOcorrenciasCell.textContent = ocorrencia.total_ocorrencias;
+                    row.appendChild(ocorrenciaCell);
+                    row.appendChild(totalOcorrenciasCell);
+                    ocorrenciasList.appendChild(row);
                 });
             }
         };

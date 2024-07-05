@@ -45,15 +45,35 @@ while ($row = $result_motoristas->fetch_assoc()) {
     $data_motoristas[] = $row;
 }
 
+// Consulta SQL para contar ocorrências por tipo de ocorrência
+$sql_ocorrencias = "SELECT ocorrencia, COUNT(*) as total_ocorrencias 
+                    FROM u219851065_AguiaAzul.ocorrencia_finalizada 
+                    GROUP BY ocorrencia";
+$result_ocorrencias = $conn->query($sql_ocorrencias);
+
+// Verificar se a consulta teve sucesso
+if (!$result_ocorrencias) {
+    die("Erro na consulta: " . $conn->error);
+}
+
+// Array para armazenar os dados das ocorrências
+$data_ocorrencias = array();
+
+// Loop através dos resultados do banco de dados e adicionar ao array
+while ($row = $result_ocorrencias->fetch_assoc()) {
+    $data_ocorrencias[] = $row;
+}
+
 // Verificar se há dados
-if (empty($data_graficos) || empty($data_motoristas)) {
+if (empty($data_graficos) || empty($data_motoristas) || empty($data_ocorrencias)) {
     die("Não foram encontrados dados.");
 }
 
 // Array para armazenar todos os dados
 $data = array(
     'graficos' => $data_graficos,
-    'motoristas' => $data_motoristas
+    'motoristas' => $data_motoristas,
+    'ocorrencias' => $data_ocorrencias
 );
 
 // Converter para formato JSON
