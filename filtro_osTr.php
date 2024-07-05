@@ -75,6 +75,7 @@
                                 <th class='text-center'>Linha</th>
                                 <th class='text-start'>Ocorrência</th>
                                 <th class='text-start'>Descrição</th>
+                                <th class='text-start'>Observações</th>
                                 <th class='text-center'>Vídeo</th>";
                 if ($_SESSION['status'] == 5) {
                     echo "<th>Editar</th>";
@@ -95,6 +96,7 @@
                             <td class='text-center'>{$linha['linha']}</td>
                             <td class='text-start'>{$linha['ocorrencia']}</td>
                             <td class='text-start'>{$linha['descricao']}</td>
+                            <td class='text-start'>{$linha['observacoes']}</td>
                             <td class='text-center'><a href='download_videoTr.php?video={$linha['id']}'>Download</a></td>";
                     echo "</tr>";
                 }
