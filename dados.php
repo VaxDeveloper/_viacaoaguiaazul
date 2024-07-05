@@ -67,12 +67,9 @@ while ($row = $result_ocorrencias->fetch_assoc()) {
 // Consulta SQL para contar ocorrências de evasão e motorista não gira a roleta por motorista
 $sql_evasao_roleta = "SELECT motorista, 
                       SUM(CASE WHEN ocorrencia = 'evasão' THEN 1 ELSE 0 END) as evasao,
-                      SUM(CASE WHEN ocorrencia = 'Motorista não gira a roleta' THEN 1 ELSE 0 END) as nao_gira_roleta,
-                      (SUM(CASE WHEN ocorrencia = 'evasão' THEN 1 ELSE 0 END) + SUM(CASE WHEN ocorrencia = 'Motorista não gira a roleta' THEN 1 ELSE 0 END)) as total_geral
+                      SUM(CASE WHEN ocorrencia = 'Motorista não gira a roleta' THEN 1 ELSE 0 END) as nao_gira_roleta
                       FROM u219851065_AguiaAzul.ocorrencia_finalizada
-                      GROUP BY motorista
-                      ORDER BY total_geral DESC
-                      LIMIT 10";
+                      GROUP BY motorista";
 $result_evasao_roleta = $conn->query($sql_evasao_roleta);
 
 // Verificar se a consulta teve sucesso
