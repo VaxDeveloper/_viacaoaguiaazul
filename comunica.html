@@ -112,6 +112,8 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
 
+                console.log("Dados recebidos:", data); // Debug log
+
                 // Verificar se há dados
                 if (!data.graficos || !data.motoristas || !data.ocorrencias || !data.evasao_roleta) {
                     console.error("Erro: Dados ausentes no JSON recebido.");
@@ -240,6 +242,8 @@
                 // Dados para a tabela dos motoristas
                 var dataMotoristas = data.motoristas;
 
+                console.log("Motoristas:", dataMotoristas); // Debug log
+
                 // Preencher a tabela dos motoristas
                 var motoristasList = document.getElementById('motoristas-list');
                 dataMotoristas.slice(0, 10).forEach(function (motorista) { // Listar apenas os 10 primeiros
@@ -256,6 +260,8 @@
                 // Dados para a tabela das ocorrências por tipo
                 var dataOcorrencias = data.ocorrencias;
 
+                console.log("Ocorrências por tipo:", dataOcorrencias); // Debug log
+
                 // Preencher a tabela das ocorrências por tipo
                 var ocorrenciasList = document.getElementById('ocorrencias-list');
                 dataOcorrencias.forEach(function (ocorrencia) {
@@ -271,6 +277,8 @@
 
                 // Dados para a tabela de evasão e não gira roleta
                 var dataEvasaoRoleta = data.evasao_roleta;
+
+                console.log("Evasão e não gira roleta:", dataEvasaoRoleta); // Debug log
 
                 // Preencher a tabela de evasão e não gira roleta
                 var evasaoRoletaList = document.getElementById('evasao-roleta-list');
