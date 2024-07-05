@@ -74,8 +74,8 @@
                                 <th class='text-center'>Carro</th>
                                 <th class='text-center'>Linha</th>
                                 <th class='text-center'>Ocorrência</th>
-                                <th class='text-center'>Descrição</th>
-                                <th class='text-center'>Observações</th>
+                                <th class='text-center'>Descrição - Fiscal</th>
+                                <th class='text-center'>Observações - Tráfego</th>
                                 <th class='text-center'>Ação</th>
                                 <th>Link do Vídeo</th>";
                 if ($_SESSION['status'] == 5) {
