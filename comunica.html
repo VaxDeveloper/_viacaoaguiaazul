@@ -1,323 +1,226 @@
-<!DOCTYPE html>
-<html>
+<script>
+    // Recuperar os dados do PHP usando AJAX
+    var xmlhttp = new XMLHttpRequest();
+    var url = "dados.php";
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
-    <link rel="stylesheet" href="assets/css/footer/Footer-Dark-icons.css">
-    <link rel="stylesheet" href="assets/css/FPE-Gentella-form-elements-custom.css">
-    <link rel="stylesheet" href="assets/css/FPE-Gentella-form-elements.css">
-    <link rel="stylesheet" href="assets/css/tela-login/Login-with-overlay-image.css">
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
 
-    <title>Gráfico com Chart.js e MySQL</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-
-    <style>
-        /* Oculta o botão de voltar ao dashboard ao imprimir */
-        @media print {
-            .print-hide {
-                display: none !important;
+            // Verificar se há dados
+            if (!data.graficos || !data.motoristas || !data.ocorrencias || !data.evasao_roleta) {
+                console.error("Erro: Dados ausentes no JSON recebido.");
+                return;
             }
-        }
-    </style>
 
-</head>
+            // Dados para o primeiro gráfico
+            var labels = [];
+            var ocorrenciaCounts = {};
+            var actionCounts = {};
 
-<body>
-
-    <nav>
-        <div class="container" style="margin-bottom:50px; margin-top: 20px">
-            <img src="assets/img/Logo_aguia-azul.png" alt="logo" style="width:300px; filter: invert(80%);">
-            <h3 style="margin-top: 20px">Relatório de Ocorrências - Setor de Vídeo</h3>
-        </div>
-    </nav>
-
-    <div class="container">
-        <!-- Gráficos -->
-        <div class="row">
-            <div class="col-md-6" style="width: 580px;">
-                <canvas id="myChart1" width="400" height="400"></canvas>
-            </div>
-            <div class="col-md-6" style="width: 580px;">
-                <canvas id="myChart2" width="400" height="400"></canvas>
-            </div>
-        </div>
-
-        <!-- Lista de motoristas com mais ocorrências -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h4>Top 10 Motoristas com Mais Ocorrências</h4>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Motorista</th>
-                            <th>Total de Ocorrências</th>
-                        </tr>
-                    </thead>
-                    <tbody id="motoristas-list">
-                        <!-- Conteúdo preenchido pelo JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Lista de ocorrências por tipo -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h4>Quantidade de Ocorrências por Tipo</h4>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Ocorrência</th>
-                            <th>Total de Ocorrências</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ocorrencias-list">
-                        <!-- Conteúdo preenchido pelo JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Lista de motoristas com evasão e não gira roleta -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h4>Ocorrências de Evasão</h4>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Motorista</th>
-                            <th>Total de Evasão</th>
-                            <th>Total de "Motorista não gira a roleta"</th>
-                            <th>Total Geral</th>
-                        </tr>
-                    </thead>
-                    <tbody id="evasao-roleta-list">
-                        <!-- Conteúdo preenchido pelo JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Recuperar os dados do PHP usando AJAX
-        var xmlhttp = new XMLHttpRequest();
-        var url = "dados.php";
-
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var data = JSON.parse(this.responseText);
-
-                // Verificar se há dados
-                if (!data.graficos || !data.motoristas || !data.ocorrencias || !data.evasao_roleta) {
-                    console.error("Erro: Dados ausentes no JSON recebido.");
-                    return;
+            data.graficos.forEach(function (item) {
+                var label = item.ocorrencia;
+                if (!labels.includes(label)) {
+                    labels.push(label);
                 }
-
-                // Dados para o primeiro gráfico
-                var labels = [];
-                var ocorrenciaCounts = {};
-                var actionCounts = {};
-
-                data.graficos.forEach(function (item) {
-                    var label = item.ocorrencia;
-                    if (!labels.includes(label)) {
-                        labels.push(label);
-                    }
-                    if (!ocorrenciaCounts[label]) {
-                        ocorrenciaCounts[label] = 0;
-                    }
-                    ocorrenciaCounts[label] += 1;
-
-                    if (!actionCounts[label]) {
-                        actionCounts[label] = {};
-                    }
-                    if (!actionCounts[label][item.acao]) {
-                        actionCounts[label][item.acao] = 0;
-                    }
-                    actionCounts[label][item.acao] += 1;
-                });
-
-                // Preparar dados para o gráfico 1
-                var dataCounts = labels.map(function (label) {
-                    return ocorrenciaCounts[label];
-                });
-
-                var actionTotals = {};
-                for (var action in actionCounts) {
-                    for (var label in actionCounts[action]) {
-                        if (!actionTotals[label]) {
-                            actionTotals[label] = 0;
-                        }
-                        actionTotals[label] += actionCounts[action][label];
-                    }
+                if (!ocorrenciaCounts[label]) {
+                    ocorrenciaCounts[label] = 0;
                 }
+                ocorrenciaCounts[label] += 1;
 
-                // Renderizar o gráfico 1
-                var ctx1 = document.getElementById('myChart1').getContext('2d');
-                var myChart1 = new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Quantidade por Ocorrência',
-                            data: dataCounts,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: true, // Exibir a legenda
-                                position: 'top' // Posição da legenda
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function (context) {
-                                        var label = context.label || '';
-                                        var value = context.parsed || 0;
-                                        return label + ': ' + value;
-                                    }
-                                }
-                            }
-                        }
+                if (!actionCounts[label]) {
+                    actionCounts[label] = {};
+                }
+                if (!actionCounts[label][item.acao]) {
+                    actionCounts[label][item.acao] = 0;
+                }
+                actionCounts[label][item.acao] += 1;
+            });
+
+            // Preparar dados para o gráfico 1
+            var dataCounts = labels.map(function (label) {
+                return ocorrenciaCounts[label];
+            });
+
+            var actionTotals = {};
+            for (var action in actionCounts) {
+                for (var label in actionCounts[action]) {
+                    if (!actionTotals[label]) {
+                        actionTotals[label] = 0;
                     }
-                });
+                    actionTotals[label] += actionCounts[action][label];
+                }
+            }
 
-                // Preparar dados para a linha de ações no gráfico 2
-                var actionLabels = Object.keys(actionCounts);
-                var actionData = actionLabels.map(function (ocorrencia) {
-                    return Object.values(actionCounts[ocorrencia]);
-                });
-
-                // Renderizar o gráfico 2
-                var ctx2 = document.getElementById('myChart2').getContext('2d');
-                var myChart2 = new Chart(ctx2, {
-                    type: 'bar',
-                    data: {
-                        labels: Object.keys(actionTotals),
-                        datasets: [{
-                            label: 'Quantidade por ocorrência',
-                            data: Object.values(actionTotals),
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: true, // Exibir a legenda
-                                position: 'top' // Posição da legenda
-                            }
+            // Renderizar o gráfico 1
+            var ctx1 = document.getElementById('myChart1').getContext('2d');
+            var myChart1 = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quantidade por Ocorrência',
+                        data: dataCounts,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true, // Exibir a legenda
+                            position: 'top' // Posição da legenda
                         },
-                        scales: {
-                            x: {
-                                stacked: true // Empilhar barras no eixo X
-                            },
-                            y: {
-                                stacked: true // Empilhar barras no eixo Y
-                            }
-                        },
-                        tooltips: {
+                        tooltip: {
                             callbacks: {
                                 label: function (context) {
-                                    var label = context.dataset.label || '';
+                                    var label = context.label || '';
                                     var value = context.parsed || 0;
                                     return label + ': ' + value;
                                 }
                             }
                         }
                     }
-                });
+                }
+            });
 
-                // Dados para a tabela dos motoristas
-                var dataMotoristas = data.motoristas;
+            // Preparar dados para a linha de ações no gráfico 2
+            var actionLabels = Object.keys(actionCounts);
+            var actionData = actionLabels.map(function (ocorrencia) {
+                return Object.values(actionCounts[ocorrencia]);
+            });
 
-                // Preencher a tabela dos motoristas
-                var motoristasList = document.getElementById('motoristas-list');
-                dataMotoristas.forEach(function (motorista) {
-                    var row = document.createElement('tr');
-                    var motoristaCell = document.createElement('td');
-                    motoristaCell.textContent = motorista.motorista;
-                    var ocorrenciasCell = document.createElement('td');
-                    ocorrenciasCell.textContent = motorista.total_ocorrencias;
-                    row.appendChild(motoristaCell);
-                    row.appendChild(ocorrenciasCell);
-                    motoristasList.appendChild(row);
-                });
+            // Renderizar o gráfico 2
+            var ctx2 = document.getElementById('myChart2').getContext('2d');
+            var myChart2 = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(actionTotals),
+                    datasets: [{
+                        label: 'Quantidade por ocorrência',
+                        data: Object.values(actionTotals),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true, // Exibir a legenda
+                            position: 'top' // Posição da legenda
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true // Empilhar barras no eixo X
+                        },
+                        y: {
+                            stacked: true // Empilhar barras no eixo Y
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (context) {
+                                var label = context.label || '';
+                                var value = context.parsed || 0;
+                                return label + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
 
-                // Dados para a tabela das ocorrências
-                var dataOcorrencias = data.ocorrencias;
+            // Preparar dados para o gráfico 3 (Evasão e Não Gira a Roleta)
+            var motoristas = [];
+            var evasao = [];
+            var naoGiraRoleta = [];
 
-                // Preencher a tabela das ocorrências
-                var ocorrenciasList = document.getElementById('ocorrencias-list');
-                dataOcorrencias.forEach(function (ocorrencia) {
-                    var row = document.createElement('tr');
-                    var ocorrenciaCell = document.createElement('td');
-                    ocorrenciaCell.textContent = ocorrencia.ocorrencia;
-                    var totalOcorrenciasCell = document.createElement('td');
-                    totalOcorrenciasCell.textContent = ocorrencia.total_ocorrencias;
-                    row.appendChild(ocorrenciaCell);
-                    row.appendChild(totalOcorrenciasCell);
-                    ocorrenciasList.appendChild(row);
-                });
+            data.evasao_roleta.forEach(function (item) {
+                motoristas.push(item.motorista);
+                evasao.push(item.evasao);
+                naoGiraRoleta.push(item.nao_gira_roleta);
+            });
 
-                // Dados para a tabela de evasão e roleta
-                var dataEvasaoRoleta = data.evasao_roleta;
+            // Renderizar o gráfico 3
+            var ctx3 = document.getElementById('myChart3').getContext('2d');
+            var myChart3 = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: motoristas,
+                    datasets: [
+                        {
+                            label: 'Evasão',
+                            data: evasao,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Motorista não gira a roleta',
+                            data: naoGiraRoleta,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true, // Exibir a legenda
+                            position: 'top' // Posição da legenda
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    var label = context.label || '';
+                                    var value = context.raw || 0;
+                                    return label + ': ' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
 
-                // Preencher a tabela de evasão e roleta
-                var evasaoRoletaList = document.getElementById('evasao-roleta-list');
-                dataEvasaoRoleta.forEach(function (motorista) {
-                    var row = document.createElement('tr');
-                    var motoristaCell = document.createElement('td');
-                    motoristaCell.textContent = motorista.motorista;
-                    var evasaoCell = document.createElement('td');
-                    evasaoCell.textContent = motorista.evasao;
-                    var naoGiraRoletaCell = document.createElement('td');
-                    naoGiraRoletaCell.textContent = motorista.nao_gira_roleta;
-                    var totalGeralCell = document.createElement('td');
-                    totalGeralCell.textContent = motorista.evasao + motorista.nao_gira_roleta;
-                    row.appendChild(motoristaCell);
-                    row.appendChild(evasaoCell);
-                    row.appendChild(naoGiraRoletaCell);
-                    row.appendChild(totalGeralCell);
-                    evasaoRoletaList.appendChild(row);
-                });
-            }
-        };
+            // Dados para a tabela
+            var motoristaData = data.evasao_roleta;
 
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-    </script>
+            // Preencher a tabela
+            var tableBody = document.querySelector("#motorista-table tbody");
+            motoristaData.forEach(function (item) {
+                var row = document.createElement("tr");
 
-    <div class="container mt-4">
-        <div style="display: flex;">
-            <!-- Botão de volta para Painel -->
-            <div style="margin-top: 20px;" class="print-hide">
-                <a href="painel.php" class="btn btn-primary">Voltar para Painel</a>
-            </div>
+                // Adicionar células à linha da tabela
+                var motoristaCell = document.createElement("td");
+                motoristaCell.textContent = item.motorista;
+                row.appendChild(motoristaCell);
 
-            <!-- Botão de Gerar Impressão -->
-            <div style="margin-top: 20px;" class="print-hide">
-                <button onclick="imprimirPagina()" class="btn btn-secondary">Imprimir</button>
-            </div>
-        </div>
-    </div>
+                var totalCell = document.createElement("td");
+                totalCell.textContent = item.total_geral;
+                row.appendChild(totalCell);
 
-    <script>
-        function imprimirPagina() {
-            window.print();
+                tableBody.appendChild(row);
+            });
+
+            // Exibir a tabela e gráficos
+            document.getElementById('table-container').style.display = 'block';
+            document.getElementById('chart1-container').style.display = 'block';
+            document.getElementById('chart2-container').style.display = 'block';
+            document.getElementById('chart3-container').style.display = 'block';
         }
-    </script>
-</body>
+    };
 
-</html>
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+</script>
