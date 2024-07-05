@@ -92,9 +92,7 @@
                     <thead>
                         <tr>
                             <th>Motorista</th>
-                            <th>Total de Evasão</th>
-                            <th>Total de "Motorista não gira a roleta"</th>
-                            <th>Total Geral</th>
+                            <th>Evasão</th>
                         </tr>
                     </thead>
                     <tbody id="evasao-roleta-list">
@@ -244,7 +242,7 @@
 
                 // Preencher a tabela dos motoristas
                 var motoristasList = document.getElementById('motoristas-list');
-                dataMotoristas.forEach(function (motorista) {
+                dataMotoristas.slice(0, 10).forEach(function (motorista) { // Listar apenas os 10 primeiros
                     var row = document.createElement('tr');
                     var motoristaCell = document.createElement('td');
                     motoristaCell.textContent = motorista.motorista;
@@ -255,10 +253,10 @@
                     motoristasList.appendChild(row);
                 });
 
-                // Dados para a tabela das ocorrências
+                // Dados para a tabela das ocorrências por tipo
                 var dataOcorrencias = data.ocorrencias;
 
-                // Preencher a tabela das ocorrências
+                // Preencher a tabela das ocorrências por tipo
                 var ocorrenciasList = document.getElementById('ocorrencias-list');
                 dataOcorrencias.forEach(function (ocorrencia) {
                     var row = document.createElement('tr');
@@ -271,25 +269,19 @@
                     ocorrenciasList.appendChild(row);
                 });
 
-                // Dados para a tabela de evasão e roleta
+                // Dados para a tabela de evasão e não gira roleta
                 var dataEvasaoRoleta = data.evasao_roleta;
 
-                // Preencher a tabela de evasão e roleta
+                // Preencher a tabela de evasão e não gira roleta
                 var evasaoRoletaList = document.getElementById('evasao-roleta-list');
                 dataEvasaoRoleta.forEach(function (motorista) {
                     var row = document.createElement('tr');
                     var motoristaCell = document.createElement('td');
                     motoristaCell.textContent = motorista.motorista;
                     var evasaoCell = document.createElement('td');
-                    evasaoCell.textContent = motorista.evasao;
-                    var naoGiraRoletaCell = document.createElement('td');
-                    naoGiraRoletaCell.textContent = motorista.nao_gira_roleta;
-                    var totalGeralCell = document.createElement('td');
-                    totalGeralCell.textContent = motorista.evasao + motorista.nao_gira_roleta;
+                    evasaoCell.textContent = motorista.total_geral; // Alterar para total_geral
                     row.appendChild(motoristaCell);
                     row.appendChild(evasaoCell);
-                    row.appendChild(naoGiraRoletaCell);
-                    row.appendChild(totalGeralCell);
                     evasaoRoletaList.appendChild(row);
                 });
             }
@@ -299,25 +291,6 @@
         xmlhttp.send();
     </script>
 
-    <div class="container mt-4">
-        <div style="display: flex;">
-            <!-- Botão de volta para Painel -->
-            <div style="margin-top: 20px;" class="print-hide">
-                <a href="painel.php" class="btn btn-primary">Voltar para Painel</a>
-            </div>
-
-            <!-- Botão de Gerar Impressão -->
-            <div style="margin-top: 20px;" class="print-hide">
-                <button onclick="imprimirPagina()" class="btn btn-secondary">Imprimir</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function imprimirPagina() {
-            window.print();
-        }
-    </script>
 </body>
 
 </html>
